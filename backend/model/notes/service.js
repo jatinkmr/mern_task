@@ -20,9 +20,18 @@ const removeNote = async noteId => {
     })
 }
 
+const updateNoteService = async (reqBodyData, noteId) => {
+    return await Note.findOneAndUpdate({
+        _id: noteId
+    }, reqBodyData, {
+        new: true
+    })
+}
+
 module.exports = {
     fetchAll,
     createNewNote,
     isNoteAvailable,
-    removeNote
+    removeNote,
+    updateNoteService
 }

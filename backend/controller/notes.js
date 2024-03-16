@@ -1,4 +1,4 @@
-const { fetchAll, createNewNote, removeNote, isNoteAvailable } = require('../model/notes/service')
+const { fetchAll, createNewNote, removeNote, isNoteAvailable, updateNoteService } = require('../model/notes/service')
 
 const fetchAllTaskController = async (req, res, next) => {
     try {
@@ -67,8 +67,36 @@ const removeTaskController = async (req, res, next) => {
     }
 }
 
+const updateExistingNoteController = async (req, res, next) => {
+    try {
+        const { title, description, noteId } = req.body
+        const isNoteExist = await isNoteAvailable(noteId)
+        if (!isNoteExist) {
+            return res.status(200).json({
+                error: true,
+                message: 'No Such Note available with given noteId'
+            })
+        }
+
+        const response = await updateNoteService({
+            title, description
+        }, noteId)
+
+        if (response) {
+            return res.status(200).json({
+                error: false,
+                message: 'Note Updated Successfully',
+                updatedNote: response
+            })
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     fetchAllTaskController,
     newTaskCreationController,
-    removeTaskController
+    removeTaskController,
+    updateExistingNoteController
 }
