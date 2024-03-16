@@ -1,0 +1,49 @@
+1) using NodeJS 18.12.1 version
+
+2) API Documentation :-
+2.1) New User Registeration
+url :- localhost:8023/api/v1/new-register
+body :- {
+  "name": "Jatin Kumar",
+  "username": "jatinkmr",
+  "password": "testing@12345"
+}
+response :-
+if success :-
+{
+    error: false,
+    message: "User reigstered Successfully"
+}
+if error :-
+{
+    error: true,
+    message: error_message
+}
+2.2) Login
+url :- localhost:8023/api/v1/login
+body :- {
+  "username": "jatinkmr",
+  "password": "testing@12345"
+}
+response :-
+if success :- {
+  "error": false,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY1NDg5NTE1MDc3ZDBkZDg4YmQ5ODIiLCJpYXQiOjE3MTA1NzQ3NzAsImV4cCI6MTcxMDY2MTE3MH0.-0O_EgvO4yDWSo8FMKdce99e6BNeFZfZ7IA6ulOQ-oo",
+  "userData": {
+    "_id": "65f5489515077d0dd88bd982",
+    "name": "Jatin Kumar",
+    "password": "$2b$10$SA4XIqJ05MHskJeMnX.S..Li6JjJby9iefAc94sEPyyEXxPlmjQ6m",
+    "username": "jatinkmr",
+    "__v": 0
+  }
+}
+if error :- {
+  "error": true,
+  "message": error_message
+}
+2.3) 
+
+
+
+
+
