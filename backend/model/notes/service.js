@@ -1,7 +1,9 @@
 const Note = require('./notes.js')
 
 const fetchAll = async () => {
-    return await Note.find()
+    return await Note.find().sort({
+        createdAt: -1
+    })
 }
 
 const createNewNote = async reqBodyData => {
