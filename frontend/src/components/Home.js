@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import './App.css'
-import { Container, Row } from 'reactstrap'
+import { Container, Row, Col, Button } from 'reactstrap'
 import { toast } from 'react-toastify'
 import TaskForm from "./TaskForm"
 import NoteService from '../Services/NoteService'
@@ -178,9 +178,20 @@ const Home = () => {
         }
     }
 
+    const logOut = () => {
+        console.log('hello')
+        localStorage.removeItem('auth-token')
+        window.location.href = '/login'
+    }
+
     return (
         <>
             <Container>
+                <Row>
+                    <Col className="d-flex justify-content-end">
+                        <Button type="button" onClick={logOut} color="info">LogOut</Button>
+                    </Col>
+                </Row>
                 <Row>
                     <TaskForm
                         formData={formData}
