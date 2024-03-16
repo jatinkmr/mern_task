@@ -50,7 +50,7 @@ const SignUp = ({ handleFormType, signInForm, handleSignInForm, createNewAccount
                         onChange={handleSignInForm}
                     />
                 </FormGroup>
-                <Button onClick={createNewAccount} type="button">Create</Button>
+                <Button onClick={createNewAccount} color="primary" type="button">Create</Button>
             </Form>
             <p>Already Have Account? <Button onClick={() => handleFormType('login')} type="button" color="link">Click Here</Button></p>
         </div>

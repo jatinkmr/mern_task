@@ -47,6 +47,16 @@ const Login = () => {
     }
 
     const handleFormType = (frmType) => {
+        setSignInForm({
+            name: '',
+            passWord: '',
+            userName: '',
+            confirmPassWord: ''
+        })
+        setFormData({
+            userName: '',
+            passWord: '',
+        })
         setFormType(frmType)
     }
 
@@ -134,6 +144,12 @@ const Login = () => {
                     autoClose: 3000
                 })
             } else {
+                setSignInForm({
+                    name: '',
+                    passWord: '',
+                    userName: '',
+                    confirmPassWord: ''
+                })
                 handleFormType('login')
                 return toast.success(response.data.message, {
                     position: 'top-right',

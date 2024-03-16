@@ -28,7 +28,7 @@ const LoginForm = ({ formData, handleChange, loginHandler, handleFormType }) => 
                         onChange={handleChange}
                     />
                 </FormGroup>
-                <Button type="button" onClick={loginHandler}>LogIn</Button>
+                <Button type="button" color="success" onClick={loginHandler}>LogIn</Button>
             </Form>
             <p>Need Account? <Button onClick={() => handleFormType('signup')} type="button" color="link">Click Here</Button></p>
         </div>
