@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
 
-const TaskForm = ({ formData, handleFormChange, handleTaskCreation }) => {
+const TaskForm = ({ formData, handleFormChange, handleTaskCreation, resetNoteForm }) => {
     return (
         <div className="App">
             <h2>Note</h2>
@@ -29,6 +29,8 @@ const TaskForm = ({ formData, handleFormChange, handleTaskCreation }) => {
                     />
                 </FormGroup>
                 <Button type="button" color="success" onClick={handleTaskCreation}>Create Note</Button>
+                {" "}
+                <Button type="button" color="danger" onClick={resetNoteForm}>Reset</Button>
             </Form>
         </div>
     )

@@ -1,15 +1,52 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import './App.css'
 import { Container, Row } from 'reactstrap'
 import { toast } from 'react-toastify'
 import TaskForm from "./TaskForm"
 import NoteService from '../Services/NoteService'
+import NoteTable from './NoteTable'
 
 const Home = () => {
     const [formData, setFormData] = useState({
         title: '',
         description: ''
     })
+    const [noteData, setNoteData] = useState([])
+
+    useEffect(() => {
+        const fetchNoteData = async () => {
+            try {
+                const response = await NoteService.taskFetchService()
+
+                if (response.data.error) {
+                    return toast.error(response.data.message, {
+                        position: 'top-right',
+                        autoClose: 3000
+                    })
+                } else {
+                    setNoteData(response.data.data)
+                }
+            } catch (error) {
+                return toast.error(error.message, {
+                    position: 'top-right',
+                    autoClose: 3000
+                })
+            }
+        }
+
+        fetchNoteData()
+    }, [])
+
+    const removeNoteData = (index) => {}
+
+    const modifyNoteData = (index) => {}
+
+    const resetNoteForm = () => {
+        setFormData({
+            title: '',
+            description: ''
+        })
+    }
 
     const handleFormChange = (ev) => {
         setFormData({
@@ -43,6 +80,8 @@ const Home = () => {
                     autoClose: 3000
                 })
             } else {
+                noteData.unshift(response.data.data)
+                setNoteData([...noteData])
                 setFormData({
                     title: '',
                     description: ''
@@ -68,9 +107,16 @@ const Home = () => {
                         formData={formData}
                         handleFormChange={handleFormChange}
                         handleTaskCreation={handleTaskCreation}
+                        resetNoteForm={resetNoteForm}
                     />
                 </Row>
-                <Row>Data Table</Row>
+                <Row>
+                    <NoteTable
+                        noteData={noteData}
+                        removeNoteData={removeNoteData}
+                        modifyNoteData={modifyNoteData}
+                    />
+                </Row>
             </Container>
         </>
     )
