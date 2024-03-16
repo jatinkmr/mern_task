@@ -37,7 +37,29 @@ const Home = () => {
         fetchNoteData()
     }, [])
 
-    const removeNoteData = (index) => {}
+    const removeNoteData = async (index) => {
+        if (window.confirm("Do you really want to remove?")) {
+            console.log('index :- ', index)
+            const filteredDataId = noteData.filter((item, ind) => index === ind)
+
+            const response = await NoteService.removeTaskService(filteredDataId[0]._id)
+
+            if (response.data.error) {
+                return toast.error(response.data.message, {
+                    position: 'top-right',
+                    autoClose: 3000
+                })
+            } else {
+                const updatedNoteData = noteData.filter((item, ind) => index !== ind)
+                setNoteData(updatedNoteData)
+
+                return toast.success(response.data.message, {
+                    position: 'top-right',
+                    autoClose: 3000
+                })
+            }
+        }
+    }
 
     const modifyNoteData = (index) => {}
 

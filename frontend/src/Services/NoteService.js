@@ -17,8 +17,14 @@ const taskFetchService = async () => {
     return await axios.get(taskFetchUrl, headerConfig)
 }
 
+const taskRemoveUrl = 'http://localhost:8023/api/v1/remove-exist'
+const removeTaskService = async (taskId) => {
+    return await axios.delete(`${taskRemoveUrl}/${taskId}`, headerConfig)
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     taskCreationService,
-    taskFetchService
+    taskFetchService,
+    removeTaskService
 }
