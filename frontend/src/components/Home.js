@@ -9,37 +9,38 @@ import NoteTable from './NoteTable'
 const Home = () => {
     const [formData, setFormData] = useState({
         title: '',
-        description: ''
+        description: '',
+        titleid: ''
     })
     const [noteData, setNoteData] = useState([])
+    const [isUpdate, setIsUpdate] = useState(false)
 
-    useEffect(() => {
-        const fetchNoteData = async () => {
-            try {
-                const response = await NoteService.taskFetchService()
+    const fetchNoteData = async () => {
+        try {
+            const response = await NoteService.taskFetchService()
 
-                if (response.data.error) {
-                    return toast.error(response.data.message, {
-                        position: 'top-right',
-                        autoClose: 3000
-                    })
-                } else {
-                    setNoteData(response.data.data)
-                }
-            } catch (error) {
-                return toast.error(error.message, {
+            if (response.data.error) {
+                return toast.error(response.data.message, {
                     position: 'top-right',
                     autoClose: 3000
                 })
+            } else {
+                setNoteData(response.data.data)
             }
+        } catch (error) {
+            return toast.error(error.message, {
+                position: 'top-right',
+                autoClose: 3000
+            })
         }
+    }
 
+    useEffect(() => {
         fetchNoteData()
     }, [])
 
     const removeNoteData = async (index) => {
         if (window.confirm("Do you really want to remove?")) {
-            console.log('index :- ', index)
             const filteredDataId = noteData.filter((item, ind) => index === ind)
 
             const response = await NoteService.removeTaskService(filteredDataId[0]._id)
@@ -61,12 +62,21 @@ const Home = () => {
         }
     }
 
-    const modifyNoteData = (index) => {}
+    const modifyNoteData = (index) => {
+        const filteredDataId = noteData.filter((item, ind) => index === ind)
+        setFormData({
+            title: filteredDataId[0].title,
+            description: filteredDataId[0].description,
+            titleid:  filteredDataId[0]._id
+        })
+        setIsUpdate(true)
+    }
 
     const resetNoteForm = () => {
         setFormData({
             title: '',
-            description: ''
+            description: '',
+            titleid: ''
         })
     }
 
@@ -106,8 +116,55 @@ const Home = () => {
                 setNoteData([...noteData])
                 setFormData({
                     title: '',
-                    description: ''
+                    description: '',
+                    titleid: ''
                 })
+                return toast.success(response.data.message, {
+                    position: 'top-right',
+                    autoClose: 3000
+                })
+            }
+        } catch (error) {
+            return toast.error(error.message, {
+                position: 'top-right',
+                autoClose: 3000
+            })
+        }
+    }
+
+    const updateExistingTask = async () => {
+        if (!formData.title) {
+            return toast.error('Please enter title', {
+                position: 'top-right',
+                autoClose: 3000
+            })
+        }
+        if (!formData.description) {
+            return toast.error('Please enter description', {
+                position: 'top-right',
+                autoClose: 3000
+            })
+        }
+        try {
+            const response = await NoteService.updateTaskService({
+                "noteId": formData.titleid,
+                "title": formData.title,
+                "description": formData.description
+            })
+
+            if (response.data.error) {
+                return toast.error(response.data.message, {
+                    position: 'top-right',
+                    autoClose: 3000
+                })
+            } else {
+                setFormData({
+                    title: '',
+                    description: '',
+                    titleid: ''
+                })
+                setIsUpdate(false)
+                fetchNoteData()
                 return toast.success(response.data.message, {
                     position: 'top-right',
                     autoClose: 3000
@@ -130,6 +187,8 @@ const Home = () => {
                         handleFormChange={handleFormChange}
                         handleTaskCreation={handleTaskCreation}
                         resetNoteForm={resetNoteForm}
+                        isUpdate={isUpdate}
+                        updateExistingTask={updateExistingTask}
                     />
                 </Row>
                 <Row>

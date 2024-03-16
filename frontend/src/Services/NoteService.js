@@ -18,13 +18,19 @@ const taskFetchService = async () => {
 }
 
 const taskRemoveUrl = 'http://localhost:8023/api/v1/remove-exist'
-const removeTaskService = async (taskId) => {
+const removeTaskService = async taskId => {
     return await axios.delete(`${taskRemoveUrl}/${taskId}`, headerConfig)
+}
+
+const taskUpdateUrl = 'http://localhost:8023/api/v1/update-exist-note'
+const updateTaskService = async reqBodyData => {
+    return await axios.put(taskUpdateUrl, reqBodyData, headerConfig)
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     taskCreationService,
     taskFetchService,
-    removeTaskService
+    removeTaskService,
+    updateTaskService
 }
