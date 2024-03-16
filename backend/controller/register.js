@@ -45,7 +45,10 @@ const userLoginController = async (req, res, next) => {
 
         const validPass = await Bcrypt.compare(password, isUserNameExist.password);
         if (!validPass) {
-            return res.status(400).send('Invalid Password !!');
+            return res.status(200).json({
+                error: true,
+                message: 'Invalid Password!'
+            });
         }
 
         const token = jwt.sign({

@@ -11,7 +11,6 @@ import SignIn from './components/SignUp';
 import Home from './components/Home';
 
 export function App () {
-  const [loggedIn, setLoggedIn] = useState (false);
 
   return (
     <Router>
@@ -19,7 +18,7 @@ export function App () {
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signup" element={<SignIn />} />
 
-        <PrivateRoute path="/home" loggedIn={loggedIn} element={Home} />
+        <PrivateRoute path="/home" element={Home} />
 
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>

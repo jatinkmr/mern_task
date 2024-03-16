@@ -1,9 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
+const cors = require('cors')
 
 const PORT = 8023 || process.env.PORT
 require('./database')
+
+app.use(cors())
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
